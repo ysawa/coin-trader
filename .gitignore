@@ -24,6 +24,7 @@ sozai/*
 *.js.map
 
 ####### Project
+nonce.txt
 settings.py
 logs/*
 
