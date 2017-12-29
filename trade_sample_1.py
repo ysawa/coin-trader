@@ -2,7 +2,8 @@ from bitflyer.api import BitflyerApi
 from zaif.api import ZaifApi, CURRENCY_PAIR_BTC_JPY
 
 bitflyer_api = BitflyerApi()
-bitflyer_api.request_private_api('/v1/me/getbalance', 'GET')
+result = bitflyer_api.request_private_api('/v1/me/getbalance', 'GET')
+print(result)
 
 zaif_api = ZaifApi()
 result = zaif_api.request_currency_pairs()

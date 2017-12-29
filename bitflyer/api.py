@@ -15,8 +15,25 @@ END_POINT = 'https://api.bitflyer.jp'
 
 class BitflyerApi(BaseApi):
 
+    def get_currency_pair(self, currency_pair=None):
+        if currency_pair is None:
+            return CURRENCY_PAIR_BTC_JPY
+        return currency_pair
+
     def request_balance(self):
         result = None
+        return result
+
+    def request_cancel(self, child_order_id=None, child_order_acceptance_id=None, currency_pair=None, **options):
+        currency_pair = self.get_currency_pair(currency_pair)
+        parameters = {
+            'product_code': currency_pair,
+        }
+        if child_order_id:
+            parameters['child_order_id'] = child_order_id
+        else:
+            parameters['child_order_acceptance_id'] = child_order_acceptance_id
+        result = self.request_private_api('/v1/me/cancelchildorder', parameters=parameters)
         return result
 
     def request_last_price(self, currency_pair=None):
@@ -53,6 +70,8 @@ class BitflyerApi(BaseApi):
             response = requests.get(url, headers=headers)
         if response.status_code != 200:
             raise Exception('return status code is {} "{}"'.format(response.status_code, response.text))
+        if not response.text:
+            return None
         result = json.loads(response.text)
         return result
 
@@ -65,3 +84,16 @@ class BitflyerApi(BaseApi):
             raise Exception('return status code is {} "{}"'.format(response.status_code, response.text))
         result = json.loads(response.text)
         return result
+
+    def request_trade(self, amount, is_ask, is_limit, price=None, currency_pair=None, **options):
+        currency_pair = self.get_currency_pair(currency_pair)
+        parameters = {
+            'product_code': currency_pair,
+            'child_order_type': ('LIMIT' if is_limit else 'MARKET'),
+            'side': ('BUY' if is_ask else 'SELL'),
+            'size': amount,
+        }
+        if not is_limit:
+            parameters['price'] = price
+        result = self.request_private_api('/v1/me/sendchildorder', parameters=parameters)
+        return result['child_order_acceptance_id']
