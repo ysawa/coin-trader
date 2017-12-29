@@ -1,0 +1,8 @@
+# Zaif
+# 開発者向けAPI -> API Keys から発行する
+
+# APIキー
+ZAIF_API_KEY = ''
+
+# APIシークレット
+ZAIF_API_SECRET = ''
