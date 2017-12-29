@@ -85,15 +85,15 @@ class BitflyerApi(BaseApi):
         result = json.loads(response.text)
         return result
 
-    def request_trade(self, amount, is_ask, is_limit, price=None, currency_pair=None, **options):
+    def request_trade(self, amount, is_ask, price=None, currency_pair=None, **options):
         currency_pair = self.get_currency_pair(currency_pair)
         parameters = {
             'product_code': currency_pair,
-            'child_order_type': ('LIMIT' if is_limit else 'MARKET'),
+            'child_order_type': ('LIMIT' if price else 'MARKET'),
             'side': ('BUY' if is_ask else 'SELL'),
             'size': amount,
         }
-        if not is_limit:
+        if price:
             parameters['price'] = price
         result = self.request_private_api('/v1/me/sendchildorder', parameters=parameters)
         return result['child_order_acceptance_id']
