@@ -1,8 +1,16 @@
 # Zaif
 # 開発者向けAPI -> API Keys から発行する
 
-# APIキー
+# Zaif APIキー
 ZAIF_API_KEY = ''
 
-# APIシークレット
+# Zaif APIシークレット
 ZAIF_API_SECRET = ''
+
+# BitFlyer
+# https://lightning.bitflyer.jp/developer
+# APIキー
+BITFLYER_API_KEY = ''
+
+# APIシークレット
+BITFLYER_API_SECRET = ''

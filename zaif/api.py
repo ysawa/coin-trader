@@ -5,13 +5,17 @@ from urllib.parse import urlencode, quote_plus
 import os
 import requests
 import json
+
+from base.api import BaseApi
 from settings import *
 
 CURRENCY_PAIR_BTC_JPY = 'btc_jpy'
-NONCE_FILE = 'nonce.txt'
+END_POINT = 'https://api.zaif.jp/api/1'
+END_POINT_LATEST_TRADE = 'https://api.zaif.jp/tapi'
+NONCE_FILE = 'zaif_nonce.txt'
 
 
-class ZaifApi:
+class ZaifApi(BaseApi):
     def load_nonce(self):
         if not os.path.exists(NONCE_FILE):
             return 0
@@ -31,14 +35,16 @@ class ZaifApi:
         return result
 
     def request_currency_pairs(self, currency_pair='all'):
-        response = requests.get('https://api.zaif.jp/api/1/currency_pairs/{}'.format(quote_plus(currency_pair)))
+        response = requests.get('{}/currency_pairs/{}'.format(END_POINT, quote_plus(currency_pair)))
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
         result = json.loads(response.text)
         return result
 
-    def request_last_price(self):
-        response = requests.get('https://api.zaif.jp/api/1/last_price/{}'.format(quote_plus(CURRENCY_PAIR_BTC_JPY)))
+    def request_last_price(self, currency_pair=None):
+        if currency_pair is None:
+            currency_pair = CURRENCY_PAIR_BTC_JPY
+        response = requests.get('{}/last_price/{}'.format(END_POINT, quote_plus(currency_pair)))
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
         result = json.loads(response.text)
@@ -53,7 +59,7 @@ class ZaifApi:
         signature = hmac.new(bytearray(ZAIF_API_SECRET.encode('utf-8')), digestmod=hashlib.sha512)
         signature.update(encoded.encode('utf-8'))
         headers = {'key': ZAIF_API_KEY, 'sign': signature.hexdigest()}
-        response = requests.post('https://api.zaif.jp/tapi', data=encoded, headers=headers)
+        response = requests.post(END_POINT_LATEST_TRADE, data=encoded, headers=headers)
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
         result = json.loads(response.text)
