@@ -16,6 +16,12 @@ NONCE_FILE = 'zaif_nonce.txt'
 
 
 class ZaifApi(BaseApi):
+
+    def get_currency_pair(self, currency_pair=None):
+        if currency_pair is None:
+            return CURRENCY_PAIR_BTC_JPY
+        return currency_pair
+
     def load_nonce(self):
         if not os.path.exists(NONCE_FILE):
             return 0
@@ -42,8 +48,7 @@ class ZaifApi(BaseApi):
         return result
 
     def request_last_price(self, currency_pair=None):
-        if currency_pair is None:
-            currency_pair = CURRENCY_PAIR_BTC_JPY
+        currency_pair = self.get_currency_pair(currency_pair)
         response = requests.get('{}/last_price/{}'.format(END_POINT, quote_plus(currency_pair)))
         if response.status_code != 200:
             raise Exception('return status code is {}'.format(response.status_code))
@@ -67,3 +72,19 @@ class ZaifApi(BaseApi):
             raise Exception('return success code is {}'.format(result['success']))
 
         return result['return']
+
+    def request_trade(self, amount, is_ask, price=None, currency_pair=None, **options):
+        currency_pair = self.get_currency_pair(currency_pair)
+        parameters = {
+            'currency_pair': currency_pair,
+            'action': ('ask' if is_ask else 'bid'),
+            'price': price,
+            'amount': amount,
+        }
+        if 'limit' in options:
+            parameters['limit'] = options['limit']
+        if 'comment' in options:
+            parameters['comment'] = options['comment']
+
+        result = self.request_latest_trade_api(parameters)
+        return result

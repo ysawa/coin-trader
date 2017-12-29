@@ -1,5 +1,8 @@
 
 class BaseApi:
+    def get_currency_pair(self, currency_pair=None):
+        return ''
+
     def request_balance(self):
         pass
 

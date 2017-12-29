@@ -95,5 +95,10 @@ class BitflyerApi(BaseApi):
         }
         if price:
             parameters['price'] = price
+        if 'minute_to_expire' in options:
+            parameters['minute_to_expire'] = options['minute_to_expire']
+        if 'time_in_force' in options:
+            parameters['time_in_force'] = options['time_in_force']
+
         result = self.request_private_api('/v1/me/sendchildorder', parameters=parameters)
         return result['child_order_acceptance_id']
