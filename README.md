@@ -20,11 +20,7 @@ cp settings.py.sample settings.py
 
 ## 利用方法
 
-各サンプルスクリプトを参考にしてください。
-
-# 0.001 BTC を 購入(True) する (成行)
-# child_order_acceptance_id は、キャンセル時などに使える
-# result = bitflyer_api.request_trade('0.001', True)
+各サンプルスクリプトも参考にごらんください。
 
 ```python
 from bitflyer.api import BitflyerApi
@@ -36,7 +32,9 @@ print('BitFlyer LAST PRICE: {} JPY/BTC'.format(last_price))
 
 ### 売買
 
-`0.001` BTC を 成行注文( `True` ) する場合。指値注文する場合は、第三引数に価格日本円を指定する。
+`0.001` BTC を 成行注文 ( `True` ) する場合。
+第2引数を `False` にすると、売り注文になる。
+指値注文する場合は、第3引数に価格日本円を指定する。
 `child_order_acceptance_id` は、キャンセル時などに使える。
 
 ```python
@@ -48,3 +46,5 @@ print('BitFlyer child_order_acceptance_id: ', result)
 ```
 
 ## 免責
+
+開発者は、当プログラムのご利用において生じたいかなる損害・障害・損失・不具合（ご利用中のコンピュータ、ソフトウェアの環境等に生じた障害等）に対して責任・賠償等、一切の義務を負いません。
