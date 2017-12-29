@@ -32,7 +32,7 @@ print('BitFlyer LAST PRICE: {} JPY/BTC'.format(last_price))
 
 ### 売買
 
-`0.001` BTC を 成行注文 ( `True` ) する場合。
+`0.001` BTC を成行注文(買い)する場合。
 第2引数を `False` にすると、売り注文になる。
 指値注文する場合は、第3引数に価格日本円を指定する。
 `child_order_acceptance_id` は、キャンセル時などに使える。
@@ -41,8 +41,8 @@ print('BitFlyer LAST PRICE: {} JPY/BTC'.format(last_price))
 from bitflyer.api import BitflyerApi
 
 bitflyer_api = BitflyerApi()
-result = bitflyer_api.request_trade('0.001', True)
-print('BitFlyer child_order_acceptance_id: ', result)
+child_order_acceptance_id = bitflyer_api.request_trade('0.001', True)
+print('BitFlyer child_order_acceptance_id: ', child_order_acceptance_id)
 ```
 
 ## 免責
