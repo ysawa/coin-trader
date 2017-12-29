@@ -21,7 +21,7 @@ class BitflyerApi(BaseApi):
         return currency_pair
 
     def request_balance(self):
-        result = None
+        result = self.request_private_api('/v1/me/getbalance')
         return result
 
     def request_cancel(self, child_order_id=None, child_order_acceptance_id=None, currency_pair=None, **options):
@@ -33,7 +33,7 @@ class BitflyerApi(BaseApi):
             parameters['child_order_id'] = child_order_id
         else:
             parameters['child_order_acceptance_id'] = child_order_acceptance_id
-        result = self.request_private_api('/v1/me/cancelchildorder', parameters=parameters)
+        result = self.request_private_api('/v1/me/cancelchildorder', method='POST', parameters=parameters)
         return result
 
     def request_last_price(self, currency_pair=None):
@@ -43,7 +43,7 @@ class BitflyerApi(BaseApi):
         result = self.request_public_api('/v1/board/', parameters)
         return result['mid_price']
 
-    def request_private_api(self, path, method='POST', parameters=None):
+    def request_private_api(self, path, method='GET', parameters=None):
         timestamp = str(time.time())
         if parameters is None:
             parameters = dict()
@@ -100,5 +100,5 @@ class BitflyerApi(BaseApi):
         if 'time_in_force' in options:
             parameters['time_in_force'] = options['time_in_force']
 
-        result = self.request_private_api('/v1/me/sendchildorder', parameters=parameters)
+        result = self.request_private_api('/v1/me/sendchildorder', method='POST', parameters=parameters)
         return result['child_order_acceptance_id']
