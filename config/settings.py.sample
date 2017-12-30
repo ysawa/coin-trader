@@ -14,3 +14,6 @@ BITFLYER_API_KEY = ''
 
 # APIシークレット
 BITFLYER_API_SECRET = ''
+
+# 終値を Google Drive に保存する場合
+GOOGLE_API_DRIVE_PARENT_ID = ''

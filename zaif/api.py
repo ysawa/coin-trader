@@ -7,7 +7,7 @@ import requests
 import json
 
 from base.api import BaseApi
-from settings import *
+from config.settings import *
 
 CURRENCY_PAIR_BTC_JPY = 'btc_jpy'
 END_POINT = 'https://api.zaif.jp/api/1'

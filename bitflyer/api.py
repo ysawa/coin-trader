@@ -2,12 +2,12 @@ import hashlib
 import hmac
 import json
 import time
-from urllib.parse import quote_plus, urlencode
+from urllib.parse import urlencode
 
 import requests
 
 from base.api import BaseApi
-from settings import BITFLYER_API_SECRET, BITFLYER_API_KEY
+from config.settings import BITFLYER_API_SECRET, BITFLYER_API_KEY
 
 CURRENCY_PAIR_BTC_JPY = 'BTC_JPY'
 END_POINT = 'https://api.bitflyer.jp'

@@ -13,10 +13,10 @@ pip install -r requirements.txt
 
 ### 設定
 
-`settings.py.sample` を `setttings.py` にコピーし編集します。
+`config/settings.py.sample` を `config/setttings.py` にコピーし編集します。
 
 ```bash
-cp settings.py.sample settings.py
+cp config/settings.py.sample config/settings.py
 edit settings.py
 ```
 
