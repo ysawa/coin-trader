@@ -50,10 +50,12 @@ def get_credentials():
 
 
 def insert_file(path, title=None, parent_id=None):
-    """Shows basic usage of the Google Drive API.
-
-    Creates a Google Drive API service object and outputs the names and IDs
-    for up to 10 files.
+    """
+    :param str path:
+    :param Optional[str] title:
+    :param Optional[str] parent_id:
+    :return:
+    :rtype: str
     """
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
@@ -73,4 +75,4 @@ def insert_file(path, title=None, parent_id=None):
     file = drive_service.files().insert(body=file_metadata,
                                         media_body=media,
                                         fields='id').execute()
-    print('File ID: {}'.format(file.get('id')))
+    return file.get('id')
