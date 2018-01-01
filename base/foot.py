@@ -1,9 +1,15 @@
+import numpy as np
+
 
 class Foot:
     closing = None
     high = None
     low = None
     opening = None
+
+    @property
+    def array(self):
+        return np.asarray([self.opening, self.high, self.low, self.closing], np.float64)
 
     def __init__(self, time, price):
         """

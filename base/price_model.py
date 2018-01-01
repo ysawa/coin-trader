@@ -2,9 +2,6 @@
 class BasePriceModel:
     model = None
 
-    def fit(self):
-        self.model.fit()
-
     def load(self, path):
         """
 

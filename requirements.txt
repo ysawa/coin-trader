@@ -4,6 +4,7 @@ chardet==3.0.4
 daemonize==2.4.7
 enum34==1.1.6
 google-api-python-client==1.6.4
+h5py==2.7.1
 html5lib==0.9999999
 httplib2==0.10.3
 idna==2.6
@@ -18,8 +19,10 @@ pytz==2017.3
 PyYAML==3.12
 requests==2.18.4
 rsa==3.4.2
+scikit-learn==0.19.1
 scipy==1.0.0
 six==1.11.0
+sklearn==0.0
 tensorflow==1.4.1
 tensorflow-tensorboard==0.4.0rc3
 uritemplate==3.0.0
