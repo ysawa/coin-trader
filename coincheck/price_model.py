@@ -25,8 +25,8 @@ class CoincheckPriceModel(BasePriceModel):
         sentences_count = data_length - self.sentence_length
         print('data length:', data_length)
         print('sentences count:', sentences_count)
-        X = np.zeros((sentences_count, self.sentence_length, 4), dtype=np.float16)
-        y = np.zeros((sentences_count, 4), dtype=np.float16)
+        X = np.zeros((sentences_count, self.sentence_length, 4), dtype=np.float64)
+        y = np.zeros((sentences_count, 4), dtype=np.float64)
         for sentence_index in range(0, sentences_count):
             opening_value = data[sentence_index, 0]
             for foot_index in range(0, self.sentence_length):
