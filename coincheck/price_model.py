@@ -25,16 +25,18 @@ class CoincheckPriceModel(BasePriceModel):
         sentences_count = data_length - self.sentence_length
         print('data length:', data_length)
         print('sentences count:', sentences_count)
-        X = np.zeros((sentences_count, self.sentence_length, 4), dtype=np.float64)
-        y = np.zeros((sentences_count, 4), dtype=np.float64)
+        X = []
+        y = []
         for sentence_index in range(0, sentences_count):
-            opening_value = data[sentence_index, 0]
-            for foot_index in range(0, self.sentence_length):
-                X[sentence_index, foot_index] = data[sentence_index + foot_index] / opening_value
-            y[sentence_index] = data[sentence_index + self.sentence_length] / opening_value
-        X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y)
-        self.model.fit(X_train, y_train, batch_size=128, epochs=1)
-        score = self.model.evaluate(X_test, y_test)
+            x = data[sentence_index:sentence_index + self.sentence_length]
+            max_x = np.max(x)
+            X.append(x / max_x)
+            y_ = data[sentence_index + self.sentence_length]
+            y.append(y_ / max_x)
+        X = np.asarray(X, dtype=np.float64)
+        y = np.asarray(y, dtype=np.float64)
+        self.model.fit(X, y, batch_size=128, epochs=1)
+        score = self.model.evaluate(X, y)
         print('score:', score)
 
     def make_data(self, path, limit=None):

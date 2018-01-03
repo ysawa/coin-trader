@@ -24,15 +24,17 @@ def main():
         data = np.load(NUMPY_PATH)
         X = np.asarray([data[0:model.sentence_length]])
         Y = data[model.sentence_length:(model.sentence_length * 2)]
+        print(Y[:,3])
         Y_ = []
         for i in range(0, model.sentence_length):
             X = X / X[0][0]
             predicted = loaded_model.model.predict(X)
             Y_.append((predicted * data[i][0])[0])
-            X = np.asarray([np.append(X[0][1:(model.sentence_length)], predicted, axis=0)])
+            X = np.asarray([np.append(X[0][1:model.sentence_length], predicted, axis=0)])
         Y_ = np.asarray(Y_)
-        plt.plot(Y[:,3])
-        plt.plot(Y_[:,3])
+        X_ = np.asarray(data[0:model.sentence_length])[:,3]
+        plt.plot(np.append(X_, Y_[:,3], axis=0))
+        plt.plot(np.append(X_, Y[:,3], axis=0))
         plt.savefig(PREDICTION_PATH)
 
     else:
