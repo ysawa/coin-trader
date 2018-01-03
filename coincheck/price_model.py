@@ -78,8 +78,6 @@ class CoincheckPriceModel(BasePriceModel):
         model.add(Activation('relu'))
         model.add(Dropout(0.5))
         model.add(Dense(4))
-        model.add(Activation('relu'))
-        model.add(Dropout(0.5))
         optimizer = Adamax()
         model.compile(loss='mean_squared_error', optimizer=optimizer)
         self.model = model

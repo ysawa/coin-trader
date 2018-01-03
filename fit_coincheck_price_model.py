@@ -35,8 +35,8 @@ def main():
             X = np.asarray([np.append(X[0][1:sentence_length], predicted, axis=0)])
         Y_ = np.asarray(Y_)
         X_ = np.asarray(data[sentence_length:(sentence_length * 2)])[:, 3]
-        plt.plot(np.append(X_, Y_[:,3], axis=0))
-        plt.plot(np.append(X_, Y[:,3], axis=0))
+        plt.plot(np.append(X_, Y_[:, 3], axis=0))
+        plt.plot(np.append(X_, Y[:, 3], axis=0))
         plt.savefig(PREDICTION_PATH)
 
     else:
