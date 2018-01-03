@@ -35,8 +35,9 @@ class CoincheckPriceModel(BasePriceModel):
             y.append(y_ / max_x)
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y, dtype=np.float64)
-        self.model.fit(X, y, batch_size=128, epochs=1)
-        score = self.model.evaluate(X, y)
+        X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y)
+        self.model.fit(X_train, y_train, batch_size=128, epochs=1)
+        score = self.model.evaluate(X_test, y_test)
         print('score:', score)
 
     def make_data(self, path, limit=None):
@@ -82,5 +83,6 @@ class CoincheckPriceModel(BasePriceModel):
 
     def predict(self, x):
         max_x = np.max(x)
+        print(max_x, x, x / max_x)
         predicted = self.model.predict(x / max_x)
         return predicted * max_x
