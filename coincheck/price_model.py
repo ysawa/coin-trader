@@ -70,7 +70,7 @@ class CoincheckPriceModel(BasePriceModel):
 
     def make_model(self):
         model = Sequential()
-        lstm = LSTM(1024, input_shape=(self.sentence_length, 4), return_sequences=True)
+        lstm = LSTM(1024, input_shape=(self.sentence_length, 4), return_sequences=False)
         model.add(lstm)
         model.add(Dense(4))
         model.add(Activation("linear"))
