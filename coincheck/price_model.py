@@ -75,7 +75,11 @@ class CoincheckPriceModel(BasePriceModel):
         model.add(Activation('relu'))
         model.add(Dropout(0.5))
         model.add(Dense(128))
+        model.add(Activation('relu'))
+        model.add(Dropout(0.5))
         model.add(Dense(4))
+        model.add(Activation('relu'))
+        model.add(Dropout(0.5))
         optimizer = Adamax()
         model.compile(loss='mean_squared_error', optimizer=optimizer)
         self.model = model
@@ -83,6 +87,5 @@ class CoincheckPriceModel(BasePriceModel):
 
     def predict(self, x):
         max_x = np.max(x)
-        print(max_x, x, x / max_x)
         predicted = self.model.predict(x / max_x)
         return predicted * max_x

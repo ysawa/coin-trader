@@ -3,6 +3,8 @@ import sys
 import numpy as np
 from keras.models import load_model
 from coincheck.price_model import CoincheckPriceModel
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 CSV_PATH = 'data/last_price/bitcoincharts/bitcoincharts-coincheckJPY.csv'
