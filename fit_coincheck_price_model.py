@@ -25,7 +25,7 @@ def main():
         model.model = load_model(MODEL_PATH)
         data = np.load(NUMPY_PATH)
         sentence_length = model.sentence_length
-        turn = 32
+        turn = 0
         X = np.asarray([data[(sentence_length * turn):(sentence_length * (turn + 1))]])
         Y = data[(sentence_length * (turn + 1)):(sentence_length * (turn + 2))]
         Y_ = []

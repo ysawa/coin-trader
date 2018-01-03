@@ -36,8 +36,9 @@ class CoincheckPriceModel(BasePriceModel):
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y, dtype=np.float64)
         X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y)
-        self.model.fit(X_train, y_train, batch_size=128, epochs=100)
-        score = self.model.evaluate(X_test, y_test)
+        batch_size = 512
+        self.model.fit(X_train, y_train, batch_size=batch_size)
+        score = self.model.evaluate(X_test, y_test, batch_size=batch_size)
         print('score:', score)
 
     def make_data(self, path, limit=None):
@@ -70,7 +71,7 @@ class CoincheckPriceModel(BasePriceModel):
 
     def make_model(self):
         model = Sequential()
-        lstm = LSTM(1024, input_shape=(self.sentence_length, 4), return_sequences=False)
+        lstm = LSTM(128, input_shape=(self.sentence_length, 4), return_sequences=False)
         model.add(lstm)
         model.add(Dense(4))
         model.add(Activation("linear"))
