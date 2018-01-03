@@ -2,7 +2,7 @@ from datetime import datetime
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.layers import LSTM
-from keras.optimizers import RMSprop, Adamax
+from keras.optimizers import Adam
 from keras.utils.data_utils import get_file
 import numpy as np
 import random, sys
@@ -70,7 +70,7 @@ class CoincheckPriceModel(BasePriceModel):
 
     def make_model(self):
         model = Sequential()
-        lstm = LSTM(128, input_shape=(self.sentence_length, 4))
+        lstm = LSTM(128, input_shape=(self.sentence_length, 4), return_sequences=True)
         model.add(lstm)
         model.add(Activation('relu'))
         model.add(Dropout(0.5))
@@ -78,7 +78,8 @@ class CoincheckPriceModel(BasePriceModel):
         model.add(Activation('relu'))
         model.add(Dropout(0.5))
         model.add(Dense(4))
-        optimizer = Adamax()
+        model.add(Activation("linear"))
+        optimizer = Adam(lr=0.001)
         model.compile(loss='mean_squared_error', optimizer=optimizer)
         self.model = model
         return self.model
