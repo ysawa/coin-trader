@@ -79,3 +79,8 @@ class CoincheckPriceModel(BasePriceModel):
         model.compile(loss='mean_squared_error', optimizer=optimizer)
         self.model = model
         return self.model
+
+    def predict(self, x):
+        max_x = np.max(x)
+        predicted = self.model.predict(x / max_x)
+        return predicted * max_x
