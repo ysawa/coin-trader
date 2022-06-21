@@ -12,7 +12,7 @@ idna==2.6
 Keras==2.1.2
 Markdown==2.6.10
 matplotlib==2.1.1
-numpy==1.13.3
+numpy==1.22.0
 oauth2client==4.1.2
 protobuf==3.5.1
 pyasn1==0.4.2
